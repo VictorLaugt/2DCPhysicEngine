@@ -17,7 +17,12 @@ typedef struct
     sphere collision_sphere;
 } dynpoint;
 
-dynpoint *dynpoint__new(vector initial_position, float radius, float mass);
+dynpoint *dynpoint__new(
+    vector initial_position,
+    vector initial_speed,
+    float radius,
+    float mass
+);
 void dynpoint__delete(dynpoint *system);
 
 void dynpoint__apply_forces(dynpoint *m, vector const *f, float dt);
@@ -29,7 +34,8 @@ typedef struct
 {
     float bounce_coeff;
     vector position;
-    geometric_shape *shape; // shape used to perform collision detection on the system
+    geometric_shape
+        *shape; // shape used to perform collision detection on the system
 } statsys;
 
 statsys *bouncer__new(vector position, float radius);

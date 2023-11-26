@@ -3,10 +3,15 @@
 #include <stdlib.h>
 
 
-dynpoint *dynpoint__new(vector initial_position, float radius, float mass) {
+dynpoint *dynpoint__new(
+    vector initial_position,
+    vector initial_speed,
+    float radius,
+    float mass
+) {
     dynpoint *system = (dynpoint *)malloc(sizeof(dynpoint));
     system->acceleration = ZERO;
-    system->speed = ZERO;
+    system->speed = initial_speed;
     system->position = initial_position;
     system->mass = mass;
     system->collision_sphere.center = &system->position;

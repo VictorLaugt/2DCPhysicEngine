@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdlib.h>
 
 #include "world.h"
 #include "force.h"
@@ -17,16 +17,43 @@ static void reset_external_forces(world *w) {
 
 void world__init(world *w) {
     reset_external_forces(w);
+
+    w->dynpoint_coll_mtrx =
+        (vector *)malloc(sizeof(vector) * w->dynpoint_nb * w->dynpoint_nb);
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         for (int j = 0; j < w->dynpoint_nb; j += 1) {
-            w->dynpoint_coll[i][j] = ZERO;
+            *(w->dynpoint_coll_mtrx + i * w->dynpoint_nb + j) = ZERO;
         }
     }
+
+    w->statsys_coll_mtrx =
+        (vector *)malloc(sizeof(vector) * w->dynpoint_nb * w->statsys_nb);
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         for (int j = 0; j < w->statsys_nb; j += 1) {
-            w->statsys_coll[i][j] = ZERO;
+            *(w->statsys_coll_mtrx + i * w->statsys_nb + j) = ZERO;
         }
     }
+}
+
+void world__free(world *w) {
+    free(w->dynpoint_coll_mtrx);
+    free(w->statsys_coll_mtrx);
+}
+
+vector world__get_dynpoint_collision(world *w, int i, int j) {
+    return *(w->dynpoint_coll_mtrx + i * w->dynpoint_nb + j);
+}
+
+vector world__get_statsys_collision(world *w, int i, int j) {
+    return *(w->statsys_coll_mtrx + i * w->statsys_nb + j);
+}
+
+void world__set_dynpoint_collision(world *w, int i, int j, vector const *normal) {
+    *(w->dynpoint_coll_mtrx + i * w->dynpoint_nb + j) = *normal;
+}
+
+void world__set_statsys_collision(world *w, int i, int j, vector const *normal) {
+    *(w->statsys_coll_mtrx + i * w->statsys_nb + j) = *normal;
 }
 
 
@@ -40,20 +67,22 @@ static void refresh_collisions(world *w) {
 
         for (int j = 0; j < w->statsys_nb; j += 1) {
             geometric_shape *shape_j = w->statsys_array[j]->shape;
-            w->statsys_coll[i][j] = geometric_shape__collision(shape_j, sphere_i);
+            vector coll_normal_vector =
+                geometric_shape__collision(shape_j, sphere_i);
+            world__set_statsys_collision(w, i, j, &coll_normal_vector);
         }
     }
 
     // collisions between two dynamic points
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         sphere *sphere_i = &w->dynpoint_array[i]->collision_sphere;
-        w->dynpoint_coll[i][i] = ZERO;
+        world__set_dynpoint_collision(w, i, i, &ZERO);
 
         for (int j = 0; j < i; j += 1) {
             sphere *sphere_j = &w->dynpoint_array[j]->collision_sphere;
             vector coll_normal_vector = sphere__collision(sphere_i, sphere_j);
-            w->dynpoint_coll[i][j] = coll_normal_vector;
-            w->dynpoint_coll[j][i] = coll_normal_vector;
+            world__set_dynpoint_collision(w, i, j, &coll_normal_vector);
+            world__set_dynpoint_collision(w, j, i, &coll_normal_vector);
         }
     }
 }
@@ -64,7 +93,7 @@ static void refresh_collisions(world *w) {
  * exerted by the other dynamic point `a`.
  */
 static void dynpoint_interaction(world *w, int a, int b) {
-    vector contact_normal = w->statsys_coll[b][a];
+    vector contact_normal = world__get_dynpoint_collision(w, b, a);
     if (!vector__is_zero(&contact_normal)) {
         vector force = dynpoint_bounce_force(
             w->dynpoint_array[a],
@@ -81,7 +110,7 @@ static void dynpoint_interaction(world *w, int a, int b) {
  * exerted by the static system `a`.
  */
 static void statsys_interaction(world *w, int a, int b) {
-    vector contact_normal = w->statsys_coll[b][a];
+    vector contact_normal = world__get_statsys_collision(w, b, a);
     if (!vector__is_zero(&contact_normal)) {
         vector force = statsys_bounce_force(
             w->statsys_array[a],
@@ -127,7 +156,7 @@ static void sum_statsys_forces(world *w) {
 static void sum_perm_forces(world *w) {
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         for (int j = 0; j < w->perm_force_nb; j += 1) {
-            vector perm_force = w->perm_force_array[j](w->dynpoint_array[i]);
+            vector perm_force = w->perm_force_array[j](w, w->dynpoint_array[i]);
             vector__iadd(&w->external_forces_array[i], &perm_force);
         }
     }
