@@ -1,0 +1,8 @@
+*.o
+main
+graphic_engine
+
+build
+
+.treeignore
+.vscode

@@ -1,0 +1,30 @@
+BasedOnStyle: Microsoft
+IndentWidth: 4
+ColumnLimit: 85
+
+# Déclarations, définitions et appels de fonctions avec beaucoup de paramètres
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackArguments: false
+BinPackParameters: false
+AlignAfterOpenBracket: BlockIndent
+
+# Commentaires
+AlignTrailingComments: true
+
+# Accolades
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterControlStatement: false
+  AfterFunction: false
+  AfterClass: false
+  AfterEnum: true
+  AfterStruct: true
+  AfterUnion: true
+  IndentBraces: false
+
+# Espacement maximal du code
+MaxEmptyLinesToKeep: 2
+
+# Includes
+SortIncludes: false
