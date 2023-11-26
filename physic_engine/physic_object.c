@@ -49,6 +49,6 @@ statsys *bouncer__new(vector position, float radius) {
 }
 
 void statsys__delete(statsys *system) {
-    free(system->shape);
+    geometric_shape__delete(system->shape);
     free(system);
 }

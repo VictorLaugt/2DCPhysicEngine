@@ -25,7 +25,7 @@ struct geometric_shape
  * Collision methods
  */
 vector sphere__collision(sphere const *s1, sphere const *s2) {
-    vector u = vector__sub(&s2->center, &s1->center);
+    vector u = vector__sub(s2->center, s1->center);
     float r = s2->radius + s1->radius;
     if (vector__squared_norm(&u) <= (r * r)) {
         return vector__normalized(&u);
@@ -36,7 +36,7 @@ vector sphere__collision(sphere const *s1, sphere const *s2) {
 }
 
 vector surface__collision(surface const *p, sphere const *s) {
-    vector u = vector__sub(&s->center, &p->point);
+    vector u = vector__sub(s->center, p->point);
     if (vector__dot_product(&p->normal, &u) <= s->radius) {
         return p->normal;
     }
@@ -47,8 +47,8 @@ vector surface__collision(surface const *p, sphere const *s) {
 
 typedef vector (*collision_detector)(void const *shape_data, sphere const *s);
 static collision_detector COLISION_METHODS[SHAPE_TYPE_NB] = {
-    sphere__collision,
-    surface__collision,
+    (collision_detector)sphere__collision,
+    (collision_detector)surface__collision,
 };
 
 

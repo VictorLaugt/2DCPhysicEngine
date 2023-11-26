@@ -4,7 +4,6 @@
 #include "force.h"
 
 
-
 /**
  * Sets to `ZERO` the external forces resultant of every dynamic point of the
  * world `w`.
@@ -34,7 +33,7 @@ void world__init(world *w) {
 /**
  * Compute every possible collisions in the world `w`.
  */
-static void detect_collision(world *w) {
+static void refresh_collisions(world *w) {
     // collisions between a dynamic point and a static system
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         sphere *sphere_i = &w->dynpoint_array[i]->collision_sphere;
@@ -68,7 +67,7 @@ static void dynpoint_interaction(world *w, int a, int b) {
     vector contact_normal = w->statsys_coll[b][a];
     if (!vector__is_zero(&contact_normal)) {
         vector force = dynpoint_bounce_force(
-            w->statsys_array[a],
+            w->dynpoint_array[a],
             w->dynpoint_array[b],
             &contact_normal,
             w->time_step

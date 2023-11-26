@@ -2,6 +2,7 @@
 
 #include <world.h>
 
+#define UNUSED(x) ((void)x)
 
 int main(int argc, char *argv[]) {
     UNUSED(argc);
@@ -61,16 +62,16 @@ int main(int argc, char *argv[]) {
     vector wall_2_normal = {-1.0f, 1.0f};
     vector wall_2_position = {30.0f, 0.0f};
     statsys *wall_2 = wall__new(wall_2_position, wall_2_normal);
-    
+
     vector ground_normal = {0.0f, 1.0f};
     vector ground_position = {-30.0f, 0.0f};
     statsys *ground = wall__new(wall_1_position, ground_normal);
 
     statsys *static_systems[3] = {wall_1, wall_2, ground};
 
-    wall__delete(wall_1);
-    wall__delete(wall_2);
-    wall__delete(ground);
+    statsys__delete(wall_1);
+    statsys__delete(wall_2);
+    statsys__delete(ground);
 
     return EXIT_SUCCESS;
 }
