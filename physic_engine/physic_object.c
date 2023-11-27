@@ -1,6 +1,7 @@
 #include "physic_object.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 
 dynpoint *dynpoint__new(
@@ -36,6 +37,20 @@ void dynpoint__apply_forces(dynpoint *m, vector const *f, float dt) {
     vector__iadd(&m->position, &speed_dt);
 }
 
+void dynpoint__print(dynpoint *system) {
+    printf("dynpoint(a = ");
+    vector__print(&system->acceleration);
+    printf(", s = ");
+    vector__print(&system->speed);
+    printf(", p = ");
+    vector__print(&system->position);
+    printf(
+        ", radius = %f, mass = %f)",
+        system->collision_sphere.radius,
+        system->mass
+    );
+}
+
 
 statsys *wall__new(vector position, vector normal) {
     statsys *system = (statsys *)malloc(sizeof(statsys));
@@ -56,4 +71,10 @@ statsys *bouncer__new(vector position, float radius) {
 void statsys__delete(statsys *system) {
     geometric_shape__delete(system->shape);
     free(system);
+}
+
+void statsys__print(statsys *system) {
+    printf("statsys(p = ");
+    vector__print(&system->position);
+    printf(", bounce_coeff = %f)", system->bounce_coeff);
 }

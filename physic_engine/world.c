@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "world.h"
 #include "force.h"
@@ -101,7 +102,7 @@ static void dynpoint_interaction(world *w, int a, int b) {
             &contact_normal,
             w->time_step
         );
-        vector__iadd(&w->external_forces_array[a], &force);
+        vector__iadd(&w->external_forces_array[b], &force);
     }
 }
 
@@ -112,13 +113,19 @@ static void dynpoint_interaction(world *w, int a, int b) {
 static void statsys_interaction(world *w, int a, int b) {
     vector contact_normal = world__get_statsys_collision(w, b, a);
     if (!vector__is_zero(&contact_normal)) {
+        printf("colision : ");
+        statsys__print(w->statsys_array[a]);
+        printf("  ");
+        dynpoint__print(w->dynpoint_array[b]);
+        printf("\n");
+
         vector force = statsys_bounce_force(
             w->statsys_array[a],
             w->dynpoint_array[b],
             &contact_normal,
             w->time_step
         );
-        vector__iadd(&w->external_forces_array[a], &force);
+        vector__iadd(&w->external_forces_array[b], &force);
     }
 }
 

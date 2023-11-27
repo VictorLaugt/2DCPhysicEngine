@@ -80,5 +80,5 @@ void vector__normalize(vector *u) {
 }
 
 void vector__print(vector const *u) {
-    printf("vector(x = %f, y = %f)\n", u->x, u->y);
+    printf("[%f, %f]", u->x, u->y);
 }

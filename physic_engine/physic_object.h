@@ -2,7 +2,7 @@
 #define PHYSIC_OBJECT_H
 
 #include "vector.h"
-#include "geometry.h"
+#include "collision.h"
 
 
 /**
@@ -26,6 +26,7 @@ dynpoint *dynpoint__new(
 void dynpoint__delete(dynpoint *system);
 
 void dynpoint__apply_forces(dynpoint *m, vector const *f, float dt);
+void dynpoint__print(dynpoint *system);
 
 /**
  * Static system: System motion is not subject to the laws of mechanics.
@@ -41,5 +42,7 @@ typedef struct
 statsys *bouncer__new(vector position, float radius);
 statsys *wall__new(vector position, vector normal);
 void statsys__delete(statsys *system);
+
+void statsys__print(statsys *system);
 
 #endif
