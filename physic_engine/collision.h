@@ -12,7 +12,7 @@
 typedef struct
 {
     vector *center;
-    float radius;
+    double radius;
 } sphere;
 
 vector sphere__collision(sphere const *s1, sphere const *s2);
@@ -38,7 +38,7 @@ typedef struct geometric_shape geometric_shape;
 vector geometric_shape__collision(geometric_shape const *shape, sphere const *s);
 
 geometric_shape *surface__new(vector *position, vector normal);
-geometric_shape *sphere__new(vector *position, float radius);
+geometric_shape *sphere__new(vector *position, double radius);
 
 void geometric_shape__delete(geometric_shape *shape);
 

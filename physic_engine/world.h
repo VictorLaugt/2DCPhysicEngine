@@ -31,11 +31,11 @@ struct world
     int perm_force_nb;
 
     // physical parameters
-    float gravity_coeff;
-    float friction_coeff;
+    double gravity_coeff;
+    double friction_coeff;
 
     // time step of the simulation
-    float const time_step;
+    double const time_step;
 };
 
 

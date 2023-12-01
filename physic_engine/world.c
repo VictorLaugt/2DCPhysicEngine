@@ -113,10 +113,12 @@ static void dynpoint_interaction(world *w, int a, int b) {
 static void statsys_interaction(world *w, int a, int b) {
     vector contact_normal = world__get_statsys_collision(w, b, a);
     if (!vector__is_zero(&contact_normal)) {
-        printf("colision : ");
+        printf("collision : ");
         statsys__print(w->statsys_array[a]);
         printf("  ");
         dynpoint__print(w->dynpoint_array[b]);
+        printf("\ncollision normal : ");
+        vector__print(&contact_normal);
         printf("\n");
 
         vector force = statsys_bounce_force(
@@ -125,6 +127,11 @@ static void statsys_interaction(world *w, int a, int b) {
             &contact_normal,
             w->time_step
         );
+
+        printf("bounce force : ");
+        vector__print(&force);
+        printf("\n");
+
         vector__iadd(&w->external_forces_array[b], &force);
     }
 }
@@ -164,6 +171,11 @@ static void sum_perm_forces(world *w) {
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         for (int j = 0; j < w->perm_force_nb; j += 1) {
             vector perm_force = w->perm_force_array[j](w, w->dynpoint_array[i]);
+
+            printf("gravity force : ");
+            vector__print(&perm_force);
+            printf("\n");
+
             vector__iadd(&w->external_forces_array[i], &perm_force);
         }
     }

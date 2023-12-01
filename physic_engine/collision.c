@@ -26,7 +26,7 @@ struct geometric_shape
  */
 vector sphere__collision(sphere const *s1, sphere const *s2) {
     vector u = vector__sub(s2->center, s1->center);
-    float r = s2->radius + s1->radius;
+    double r = s2->radius + s1->radius;
     if (vector__squared_norm(&u) <= (r * r)) {
         return vector__normalized(&u);
     }
@@ -60,7 +60,7 @@ vector geometric_shape__collision(geometric_shape const *shape, sphere const *s)
     return COLISION_METHODS[shape->type](shape->data, s);
 }
 
-geometric_shape *sphere__new(vector *position, float radius) {
+geometric_shape *sphere__new(vector *position, double radius) {
     sphere *data = (sphere *)malloc(sizeof(sphere));
     data->center = position;
     data->radius = radius;
@@ -75,7 +75,8 @@ geometric_shape *sphere__new(vector *position, float radius) {
 geometric_shape *surface__new(vector *position, vector normal) {
     surface *data = (surface *)malloc(sizeof(surface));
     data->point = position;
-    data->normal = vector__normalized(&normal);
+    // data->normal = vector__normalized(&normal);
+    data->normal = normal;
 
     geometric_shape *shape = (geometric_shape *)malloc(sizeof(geometric_shape));
     shape->data = (void *)data;

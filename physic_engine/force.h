@@ -10,14 +10,14 @@ vector statsys_bounce_force(
     statsys const *s,
     dynpoint const *m,
     vector const *contact_normal,
-    float dt
+    double dt
 );
 
 vector dynpoint_bounce_force(
     dynpoint const *m1,
     dynpoint const *m2,
     vector const *contact_normal,
-    float dt
+    double dt
 );
 
 #endif

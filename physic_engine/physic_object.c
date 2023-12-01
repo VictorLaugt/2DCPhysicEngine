@@ -7,8 +7,8 @@
 dynpoint *dynpoint__new(
     vector initial_position,
     vector initial_speed,
-    float radius,
-    float mass
+    double radius,
+    double mass
 ) {
     dynpoint *system = (dynpoint *)malloc(sizeof(dynpoint));
     system->acceleration = ZERO;
@@ -24,7 +24,7 @@ void dynpoint__delete(dynpoint *system) {
     free(system);
 }
 
-void dynpoint__apply_forces(dynpoint *m, vector const *f, float dt) {
+void dynpoint__apply_forces(dynpoint *m, vector const *f, double dt) {
     // acceleration = 1/m * f
     m->acceleration = vector__div(f, m->mass);
 
@@ -54,15 +54,15 @@ void dynpoint__print(dynpoint *system) {
 
 statsys *wall__new(vector position, vector normal) {
     statsys *system = (statsys *)malloc(sizeof(statsys));
-    system->bounce_coeff = 1.0f;
+    system->bounce_coeff = 1.0;
     system->position = position;
     system->shape = surface__new(&system->position, normal);
     return system;
 }
 
-statsys *bouncer__new(vector position, float radius) {
+statsys *bouncer__new(vector position, double radius) {
     statsys *system = (statsys *)malloc(sizeof(statsys));
-    system->bounce_coeff = 1.5f;
+    system->bounce_coeff = 1.5;
     system->position = position;
     system->shape = sphere__new(&system->position, radius);
     return system;
