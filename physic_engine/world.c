@@ -171,11 +171,6 @@ static void sum_perm_forces(world *w) {
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         for (int j = 0; j < w->perm_force_nb; j += 1) {
             vector perm_force = w->perm_force_array[j](w, w->dynpoint_array[i]);
-
-            printf("gravity force : ");
-            vector__print(&perm_force);
-            printf("\n");
-
             vector__iadd(&w->external_forces_array[i], &perm_force);
         }
     }
@@ -198,12 +193,24 @@ static void apply_external_forces(world *w) {
 
 
 void world__next_step(world *w) {
+    static long unsigned int step = 0;
+    step += 1;
+
+    printf("===== step = %lu =====\n", step);
+
+    // non collision forces
+    reset_external_forces(w);
+    sum_perm_forces(w);
+    apply_external_forces(w);
+    dynpoint__print(w->dynpoint_array[0]);
+    printf("\n\n");
+
+    // collision forces
     reset_external_forces(w);
     refresh_collisions(w);
-
-    sum_perm_forces(w);
     sum_statsys_forces(w);
     sum_dynpoint_forces(w);
-
     apply_external_forces(w);
+    dynpoint__print(w->dynpoint_array[0]);
+    printf("\n\n");
 }

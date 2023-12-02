@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 
 #include "collision.h"
 
@@ -37,13 +38,14 @@ vector sphere__collision(sphere const *s1, sphere const *s2) {
 
 vector surface__collision(surface const *p, sphere const *s) {
     vector u = vector__sub(s->center, p->point);
-    if (vector__dot_product(&p->normal, &u) <= s->radius) {
+    if (fabs(vector__dot_product(&p->normal, &u)) <= s->radius) {
         return p->normal;
     }
     else {
         return ZERO;
     }
 }
+
 
 typedef vector (*collision_detector)(void const *shape_data, sphere const *s);
 static collision_detector COLISION_METHODS[SHAPE_TYPE_NB] = {
@@ -75,7 +77,6 @@ geometric_shape *sphere__new(vector *position, double radius) {
 geometric_shape *surface__new(vector *position, vector normal) {
     surface *data = (surface *)malloc(sizeof(surface));
     data->point = position;
-    // data->normal = vector__normalized(&normal);
     data->normal = normal;
 
     geometric_shape *shape = (geometric_shape *)malloc(sizeof(geometric_shape));

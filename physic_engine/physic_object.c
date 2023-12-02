@@ -45,7 +45,7 @@ void dynpoint__print(dynpoint *system) {
     printf(", p = ");
     vector__print(&system->position);
     printf(
-        ", radius = %f, mass = %f)",
+        ", radius = %lf, mass = %lf)",
         system->collision_sphere.radius,
         system->mass
     );
@@ -76,5 +76,5 @@ void statsys__delete(statsys *system) {
 void statsys__print(statsys *system) {
     printf("statsys(p = ");
     vector__print(&system->position);
-    printf(", bounce_coeff = %f)", system->bounce_coeff);
+    printf(", bounce_coeff = %lf)", system->bounce_coeff);
 }

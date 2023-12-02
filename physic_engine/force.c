@@ -1,9 +1,14 @@
 #include "force.h"
 
+#include <stdio.h>
+
 #define UNUSED(x) ((void)x)
 
 vector gravity_force(world const *w, dynpoint const *m) {
     vector gravity = {.x = 0, .y = -(m->mass * w->gravity_coeff)};
+    printf("gravity force : ");
+    vector__print(&gravity);
+    printf("\n");
     return gravity;
 }
 
