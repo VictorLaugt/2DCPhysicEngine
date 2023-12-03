@@ -7,8 +7,7 @@ typedef struct world world;
 
 typedef vector (*permanent_force)(world const *, dynpoint const *);
 
-struct world
-{
+struct world {
     // array which stores every static system
     statsys **statsys_array;
     int statsys_nb;

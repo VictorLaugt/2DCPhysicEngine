@@ -9,14 +9,12 @@
 
 #define SHAPE_TYPE_NB 2
 
-typedef enum
-{
+typedef enum {
     SPHERE = 0,
     SURFACE = 1,
 } shape_type;
 
-struct geometric_shape
-{
+struct geometric_shape {
     shape_type type;
     void *data;
 };

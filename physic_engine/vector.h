@@ -3,8 +3,7 @@
 
 #include <stdbool.h>
 
-typedef struct vector
-{
+typedef struct vector {
     double x;
     double y;
 } vector;

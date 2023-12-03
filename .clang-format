@@ -1,6 +1,10 @@
 BasedOnStyle: Microsoft
-IndentWidth: 4
 ColumnLimit: 85
+
+# Indentation
+IndentWidth: 4
+NamespaceIndentation: All
+AccessModifierOffset: -4
 
 # Déclarations, définitions et appels de fonctions avec beaucoup de paramètres
 AllowAllArgumentsOnNextLine: false
@@ -9,19 +13,38 @@ BinPackArguments: false
 BinPackParameters: false
 AlignAfterOpenBracket: BlockIndent
 
-# Commentaires
-AlignTrailingComments: true
+# Compacter du code en une seule ligne
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: true
+AllowShortLambdasOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: true
+CompactNamespaces: false
 
 # Accolades
 BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterControlStatement: false
-  AfterFunction: false
-  AfterClass: false
-  AfterEnum: true
-  AfterStruct: true
-  AfterUnion: true
   IndentBraces: false
+
+  AfterControlStatement: false
+  AfterCaseLabel: false
+  BeforeWhile: false
+  BeforeCatch: true
+  BeforeElse: true
+
+  AfterFunction: false
+  AfterStruct: false
+  AfterEnum: false
+  AfterUnion: false
+  AfterClass: false
+  AfterNamespace: false
+  BeforeLambdaBody: false
+
+  AfterExternBlock: true
+
+# Commentaires
+SpacesBeforeTrailingComments: 2
+AlignTrailingComments: true
 
 # Espacement maximal du code
 MaxEmptyLinesToKeep: 2

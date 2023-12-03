@@ -20,9 +20,7 @@ dynpoint *dynpoint__new(
     return system;
 }
 
-void dynpoint__delete(dynpoint *system) {
-    free(system);
-}
+void dynpoint__delete(dynpoint *system) { free(system); }
 
 void dynpoint__apply_forces(dynpoint *m, vector const *f, double dt) {
     // acceleration = 1/m * f

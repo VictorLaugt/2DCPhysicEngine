@@ -8,8 +8,7 @@
 /**
  * Dynamic point: system whose motion is subject to the laws of point mechanics.
  */
-typedef struct
-{
+typedef struct {
     vector acceleration;
     vector speed;
     vector position;
@@ -31,12 +30,11 @@ void dynpoint__print(dynpoint *system);
 /**
  * Static system: System motion is not subject to the laws of mechanics.
  */
-typedef struct
-{
+typedef struct {
     double bounce_coeff;
     vector position;
     geometric_shape
-        *shape; // shape used to perform collision detection on the system
+        *shape;  // shape used to perform collision detection on the system
 } statsys;
 
 statsys *bouncer__new(vector position, double radius);

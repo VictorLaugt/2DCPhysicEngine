@@ -9,8 +9,7 @@
 /**
  * Sphere shape
  */
-typedef struct
-{
+typedef struct {
     vector *center;
     double radius;
 } sphere;
@@ -21,10 +20,9 @@ vector sphere__collision(sphere const *s1, sphere const *s2);
 /**
  * Surface shape
  */
-typedef struct
-{
-    vector *point; // point in the surface
-    vector normal; // unitary normal vector of the surface
+typedef struct {
+    vector *point;  // point in the surface
+    vector normal;  // unitary normal vector of the surface
 } surface;
 
 vector surface__collision(surface const *p, sphere const *s);

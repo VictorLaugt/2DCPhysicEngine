@@ -144,7 +144,7 @@ static void sum_dynpoint_forces(world *w) {
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
         for (int j = 0; j < w->dynpoint_nb; j += 1) {
             if (i == j) {
-                continue; // a dynamic point cannot exert a force on itself.
+                continue;  // a dynamic point cannot exert a force on itself.
             }
             dynpoint_interaction(w, j, i);
         }
@@ -157,9 +157,7 @@ static void sum_dynpoint_forces(world *w) {
  */
 static void sum_statsys_forces(world *w) {
     for (int i = 0; i < w->dynpoint_nb; i += 1) {
-        for (int j = 0; j < w->statsys_nb; j += 1) {
-            statsys_interaction(w, j, i);
-        }
+        for (int j = 0; j < w->statsys_nb; j += 1) { statsys_interaction(w, j, i); }
     }
 }
 

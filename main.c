@@ -6,9 +6,7 @@
 
 #define UNUSED(x) ((void)x)
 
-double myabs(double x) {
-    return (x >= 0 ? x : -x);
-}
+double myabs(double x) { return (x >= 0 ? x : -x); }
 
 int main(int argc, char *argv[]) {
 
