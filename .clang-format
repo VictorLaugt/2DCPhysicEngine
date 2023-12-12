@@ -14,12 +14,15 @@ BinPackParameters: false
 AlignAfterOpenBracket: BlockIndent
 
 # Compacter du code en une seule ligne
-AllowShortBlocksOnASingleLine: true
-AllowShortFunctionsOnASingleLine: true
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
 AllowShortLambdasOnASingleLine: true
 AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
 CompactNamespaces: false
+
+# Templates C++
+AlwaysBreakTemplateDeclarations: Yes
 
 # Accolades
 BreakBeforeBraces: Custom
